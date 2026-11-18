@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robin Herrick — Cosmic Junk Drawer & Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=JetBrains+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #090a0f;
+            --surface: #131620;
+            --surface-hover: #1b2030;
+            --neon-cyan: #00f0ff;
+            --neon-purple: #b026ff;
+            --neon-gold: #ffd700;
+            --text-main: #f0f4f8;
+            --text-muted: #8c9bae;
+            --border: #232a3d;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(176, 38, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 240, 255, 0.05) 0%, transparent 40%);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        /* Terminal Header */
+        .terminal-header {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px 12px 0 0;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+
+        /* Hero Section */
+        .hero {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-top: none;
+            border-radius: 0 0 16px 16px;
+            padding: 60px 40px;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        .hero::after {
+            content: '</>';
+            position: absolute;
+            right: -20px;
+            bottom: -40px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12rem;
+            color: rgba(255, 255, 255, 0.02);
+            pointer-events: none;
+        }
+
+        .badge {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--neon-cyan);
+            border: 1px solid rgba(0, 240, 255, 0.3);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.5rem, 5vw, 4.2rem);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+            color: #fff;
+        }
+
+        h1 span {
+            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin-bottom: 30px;
+        }
+
+        /* Metrics Grid */
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-top: 30px;
+        }
+
+        .metric-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--neon-gold);
+            margin-bottom: 4px;
+        }
+
+        .metric-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Section Styling */
+        section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: var(--neon-cyan);
+        }
+
+        .card-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--neon-cyan);
+            margin-bottom: 12px;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            margin-bottom: 20px;
+        }
+
+        .card-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: #fff;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.2s;
+        }
+
+        .card-link:hover {
+            color: var(--neon-cyan);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: var(--neon-cyan);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Terminal Bar & Hero -->
+        <div class="terminal-header">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+            <span style="margin-left: 10px;">robin@method-of-loci:~/$ cat portfolio.json</span>
+        </div>
+        
+        <div class="hero">
+            <div class="badge">METHOD OF LOCI // COSMIC JUNK DRAWER</div>
+            <h1>Hi, I'm <span>Robin Herrick</span></h1>
+            <p class="hero-subtitle">Bridging technical database architecture, viral short-form video storytelling (Sea You Out There), national print journalism, and bespoke fine art.</p>
+            
+            <div class="metrics">
+                <div class="metric-card">
+                    <div class="metric-value">6.8M+</div>
+                    <div class="metric-label">Views on Chewy (#1 TikTok Rank)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">45K+</div>
+                    <div class="metric-label">Followers (@SeaYouOutThere)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">2M+</div>
+                    <div class="metric-label">Print Circulation (Family Fun)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 1: Viral Media & Creator Work -->
+        <section>
+            <h2 class="section-title">⚡ Viral Media & Content Creation</h2>
+            <div class="grid">
+                <div class="card">
+                    <div>
+                        <div class="card-tag">TikTok Campaign</div>
+                        <h3>Chewy #1 Leaderboard Campaign</h3>
+                        <p>Generated over 6.8 million views, securing the #1 spot on TikTok's creator leaderboard through native brand integration.</p>
+                    </div>
+                    <a href="https://www.tiktok.com/@seayououtthere/video/7220839456176098602" target="_blank" class="card-link">View Viral Video &rarr;</a>
+                </div>
+                <div class="card">
+                    <div>
+                        <div class="card-tag">Off-Grid & Marine Community</div>
+                        <h3>Sea You Out There Channel</h3>
+                        <p>Documenting catamaran life, off-grid technology, green energy systems, and empowering beginners in the marine world.</p>
+                    </div>
+                    <a href="https://www.tiktok.com/@seayououtthere" target="_blank" class="card-link">Visit TikTok Channel &rarr;</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Editorial & SEO Writing -->
+        <section>
+            <h2 class="section-title">✍️ Editorial, SEO & Print Writing</h2>
+            <div class="grid">
+                <div class="card">
+                    <div>
+                        <div class="card-tag">National Print Feature</div>
+                        <h3>Making a Dated Home Attractive for Resale</h3>
+                        <p>Published in Reporter Newspapers, offering sharp, practical home renovation and real estate staging insights.</p>
+                    </div>
+                    <a href="https://roughdraftatlanta.com/2008/03/07/making-dated-home-attractive-require-minor/" target="_blank" class="card-link">Read Article &rarr;</a>
+                </div>
+                <div class="card">
+                    <div>
+                        <div class="card-tag">Travel & Lifestyle Journalism</div>
+                        <h3>Disney Do's and Don'ts from a Veteran Visitor</h3>
+                        <p>Featured in Reporter Newspapers, providing tactical advice for family travel and stress-free vacation planning.</p>
+                    </div>
+                    <a href="https://roughdraftatlanta.com/2007/11/16/disney-dos-donts-veteran-visitor/" target="_blank" class="card-link">Read Article &rarr;</a>
+                </div>
+                <div class="card">
+                    <div>
+                        <div class="card-tag">Real Estate & Staging Strategy</div>
+                        <h3>Setting the Stage for a Quick Sale</h3>
+                        <p>Detailed editorial feature breaking down the psychology and preparation behind successful home marketing.</p>
+                    </div>
+                    <a href="https://roughdraftatlanta.com/2008/09/05/setting-stage-quick-sale/" target="_blank" class="card-link">Read Article &rarr;</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Fine Art & Technical Systems -->
+        <section>
+            <h2 class="section-title">🎨 Fine Art & Technical Support</h2>
+            <div class="grid">
+                <div class="card">
+                    <div>
+                        <div class="card-tag">Fine Art Commissions</div>
+                        <h3>Bespoke Client Artwork (2017–Present)</h3>
+                        <p>Translating personal memories and client visions into custom fine art pieces (4 commissions per year).</p>
+                    </div>
+                    <span class="card-link" style="color: var(--text-muted);">BA Fine Art (UNGA) / CMU Design</span>
+                </div>
+                <div class="card">
+                    <div>
+                        <div class="card-tag">Database Architecture</div>
+                        <h3>Director of Technical Support</h3>
+                        <p>Designed custom support ticketing systems and multi-tab Excel tracking databases for Oasys Orthodontic Imaging.</p>
+                    </div>
+                    <span class="card-link" style="color: var(--text-muted);">Systems & Workflow Optimization</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>Built with curiosity by Robin Herrick &bull; <a href="mailto:robinselfherrick@gmail.com">robinselfherrick@gmail.com</a></p>
+        </footer>
+    </div>
+
+</body>
+</html>
